@@ -1,0 +1,13 @@
+services:
+  tvbox-source:
+    build: .
+    container_name: tvbox-source
+    restart: unless-stopped
+    ports:
+      - "19999:19999"
+    volumes:
+      # 挂载内容文件，改完即时生效，不用重建镜像
+      - ./library.json:/app/library.json:ro
+    environment:
+      - PORT=19999
+      - PAGE_SIZE=20

@@ -1,0 +1,52 @@
+{
+  "_说明": "你自己的内容清单。vod_pic / episodes.url 换成你自己的地址（自建图床、对象存储、NAS、CDN 均可）。这是一个完全空壳示例，把示例条目替换成你自己的内容即可。",
+  "name": "我的媒体库",
+  "classes": [
+    { "type_id": 1, "type_name": "电影" },
+    { "type_id": 2, "type_name": "电视剧" },
+    { "type_id": 3, "type_name": "综艺" },
+    { "type_id": 4, "type_name": "动漫" },
+    { "type_id": 5, "type_name": "纪录片" },
+    { "type_id": 6, "type_name": "自制内容" }
+  ],
+  "videos": [
+    {
+      "vod_id": 1,
+      "enabled": true,
+      "vod_name": "示例影片（替换成你自己的内容）",
+      "type_id": 1,
+      "vod_pic": "https://YOUR-DOMAIN.com/poster/1.jpg",
+      "vod_year": "2026",
+      "vod_area": "中国大陆",
+      "vod_lang": "国语",
+      "vod_remarks": "正片",
+      "vod_time": "2026-10-01 12:00:00",
+      "vod_score": "8.0",
+      "vod_duration": "120分钟",
+      "vod_actor": "",
+      "vod_director": "",
+      "vod_content": "这里写简介。这条内容是示例，请替换成你自己有权分发的内容。",
+      "play_sources": [
+        { "name": "线路一", "episodes": [ { "name": "正片", "url": "https://YOUR-DOMAIN.com/media/1/index.m3u8" } ] }
+      ]
+    },
+    {
+      "vod_id": 2,
+      "enabled": true,
+      "vod_name": "示例剧集（多集 + 多线路）",
+      "type_id": 2,
+      "vod_pic": "https://YOUR-DOMAIN.com/poster/2.jpg",
+      "vod_year": "2026",
+      "vod_area": "中国大陆",
+      "vod_lang": "国语",
+      "vod_remarks": "更新至02集",
+      "vod_time": "2026-10-05 08:00:00",
+      "vod_score": "7.5",
+      "vod_content": "演示多线路与多集的写法。",
+      "play_sources": [
+        { "name": "线路一", "episodes": [ { "name": "第01集", "url": "https://YOUR-DOMAIN.com/media/2/01.m3u8" }, { "name": "第02集", "url": "https://YOUR-DOMAIN.com/media/2/02.m3u8" } ] },
+        { "name": "线路二", "episodes": [ { "name": "第01集", "url": "https://YOUR-BACKUP.com/media/2/01.m3u8" }, { "name": "第02集", "url": "https://YOUR-BACKUP.com/media/2/02.m3u8" } ] }
+      ]
+    }
+  ]
+}

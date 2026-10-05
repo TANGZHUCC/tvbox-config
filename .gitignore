@@ -1,0 +1,15 @@
+# 运行时产物
+selfhost/server.pid
+selfhost/server.log
+*.log
+
+# 部署脚本缓存（含你的用户名，别提交）
+.deploy-user
+.upstream-url
+
+# 依赖
+node_modules/
+
+# 系统
+.DS_Store
+Thumbs.db

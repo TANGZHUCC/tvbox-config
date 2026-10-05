@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-10-05T15:22:39.579Z",
+  "checked": false,
+  "total": 4,
+  "alive": 4,
+  "dead": 0,
+  "aliveList": [
+    {
+      "name": "我的自建媒体库",
+      "latency": 0,
+      "note": "未检查"
+    },
+    {
+      "name": "示例源A",
+      "latency": 0,
+      "note": "未检查"
+    },
+    {
+      "name": "示例源B",
+      "latency": 0,
+      "note": "未检查"
+    },
+    {
+      "name": "示例蜘蛛源",
+      "latency": 0,
+      "note": "未检查"
+    }
+  ],
+  "deadList": []
+}

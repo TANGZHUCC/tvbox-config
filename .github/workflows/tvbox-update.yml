@@ -1,0 +1,59 @@
+name: TVBox 接口自动更新
+
+on:
+  schedule:
+    # UTC 20:10 = 北京时间 04:10，每天凌晨跑一次
+    - cron: '10 20 * * *'
+  # 支持手动触发
+  workflow_dispatch:
+  push:
+    paths:
+      - 'sources.json'
+      - 'scripts/build.mjs'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tvbox-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 构建配置（含健康检查）
+        run: node scripts/build.mjs --max=80
+
+      - name: 提交变更
+        run: |
+          git config user.name  "tvbox-bot"
+          git config user.email "tvbox-bot@users.noreply.github.com"
+          git add config/
+          if git diff --staged --quiet; then
+            echo "无变更，跳过提交"
+          else
+            git commit -m "chore(tvbox): 自动更新接口 $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
+
+      - name: 输出体检摘要
+        if: always()
+        run: |
+          echo "## TVBox 接口体检报告" >> $GITHUB_STEP_SUMMARY
+          node -e "
+            const h=require('./config/health.json');
+            console.log('生成时间：'+h.generatedAt);
+            console.log('可用 / 总数：'+h.alive+' / '+h.total);
+            console.log('');
+            console.log('失效源：');
+            h.deadList.forEach(d=>console.log('  - '+d.name+' → '+d.reason));
+          " >> $GITHUB_STEP_SUMMARY

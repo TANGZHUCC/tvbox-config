@@ -1,0 +1,14 @@
+name = "tvbox-api"
+main = "worker/index.js"
+compatibility_date = "2024-11-01"
+
+# 部署：npx wrangler deploy
+# 设上游地址：npx wrangler secret put UPSTREAM
+# 设刷新密钥：npx wrangler secret put ADMIN_KEY
+
+[vars]
+# 也可以直接写在这里（公开信息才放 vars）
+# UPSTREAM = "https://raw.githubusercontent.com/<user>/<repo>/main/config/tvbox.json"
+
+[observability]
+enabled = true
