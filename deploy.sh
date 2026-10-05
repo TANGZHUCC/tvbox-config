@@ -84,10 +84,11 @@ echo "  jsDelivr   : $JSDELIVR_URL"
 # 6. 部署 Cloudflare Worker（wrangler.toml 在 worker/ 下）
 echo ""
 echo "→ 部署 Cloudflare Worker（首次会交互让你选子域，输入一个英文即可）..."
-( cd worker && npx -y wrangler deploy )
+DEPLOY_LOG="$(mktemp)"
+( cd worker && npx -y wrangler deploy ) | tee "$DEPLOY_LOG"
 
-# 取子域；取不到就让用户粘贴
-SUBDOMAIN="$( (cd worker && npx -y wrangler subdomain 2>/dev/null) | grep -oE 'https?://[a-z0-9-]+\.workers\.dev' | head -1 || true )"
+# 直接从 deploy 输出抓取 workers.dev 地址；抓不到再回退手动粘贴
+SUBDOMAIN="$(grep -oE 'https?://[a-z0-9-]+\.workers\.dev' "$DEPLOY_LOG" | head -1 || true)"
 if [ -z "$SUBDOMAIN" ]; then
   echo "  未能自动识别子域，请根据上面 deploy 输出手动确认地址。"
   read -r -p "请粘贴你的 Worker 地址（到 .workers.dev 为止，例如 https://tvbox-api.xxx.workers.dev）: " SUBDOMAIN

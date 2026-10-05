@@ -1,5 +1,5 @@
 name = "tvbox-api"
-main = "worker/index.js"
+main = "index.js"
 compatibility_date = "2024-11-01"
 account_id = "c775a57be074d3842f3dc18109f4bf9b"
 
