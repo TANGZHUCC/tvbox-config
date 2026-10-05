@@ -93,7 +93,8 @@ echo "  首次会让你注册 workers.dev 子域：先输入 y 回车，再输�
 SUBDOMAIN=""
 while [ -z "$SUBDOMAIN" ]; do
   read -r -p "请粘贴上面部署成功后显示的 Worker 地址（到 .workers.dev，例如 https://tvbox-api.xxx.workers.dev）: " SUBDOMAIN
-  SUBDOMAIN="$(printf '%s' "$SUBDOMAIN" | grep -oE 'https?://[a-z0-9-]+\.workers\.dev' | head -1 || true)"
+  # 多段子域名(如 tvbox-api.tangzhu.workers.dev)需允许主机部分含点号；并去除粘贴带入的空白
+  SUBDOMAIN="$(printf '%s' "$SUBDOMAIN" | tr -d '[:space:]' | grep -oE 'https?://[a-zA-Z0-9.-]+\.workers\.dev' | head -1 || true)"
   [ -z "$SUBDOMAIN" ] && echo "  没识别到 workers.dev 地址，请重新粘贴。"
 done
 SUBDOMAIN="${SUBDOMAIN%/}"
