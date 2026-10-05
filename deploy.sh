@@ -82,17 +82,20 @@ echo "  GitHub Raw : $RAW_URL"
 echo "  jsDelivr   : $JSDELIVR_URL"
 
 # 6. 部署 Cloudflare Worker（wrangler.toml 在 worker/ 下）
+# 关键：deploy 必须直连终端(TTY)，不能接任何管道，否则 wrangler 判定非交互、
+#       无法弹出 workers.dev 子域注册提示而直接报错退出（这是上次失败的根因）。
 echo ""
-echo "→ 部署 Cloudflare Worker（首次会交互让你选子域，输入一个英文即可）..."
-DEPLOY_LOG="$(mktemp)"
-( cd worker && npx -y wrangler deploy ) | tee "$DEPLOY_LOG"
+echo "→ 部署 Cloudflare Worker..."
+echo "  首次会让你注册 workers.dev 子域：先输入 y 回车，再输入一个英文名（如 tvbox-api-tang）。"
+( cd worker && npx -y wrangler deploy )
 
-# 直接从 deploy 输出抓取 workers.dev 地址；抓不到再回退手动粘贴
-SUBDOMAIN="$(grep -oE 'https?://[a-z0-9-]+\.workers\.dev' "$DEPLOY_LOG" | head -1 || true)"
-if [ -z "$SUBDOMAIN" ]; then
-  echo "  未能自动识别子域，请根据上面 deploy 输出手动确认地址。"
-  read -r -p "请粘贴你的 Worker 地址（到 .workers.dev 为止，例如 https://tvbox-api.xxx.workers.dev）: " SUBDOMAIN
-fi
+# 部署成功后 wrangler 会打印形如 https://tvbox-api.<子域>.workers.dev 的地址
+SUBDOMAIN=""
+while [ -z "$SUBDOMAIN" ]; do
+  read -r -p "请粘贴上面部署成功后显示的 Worker 地址（到 .workers.dev，例如 https://tvbox-api.xxx.workers.dev）: " SUBDOMAIN
+  SUBDOMAIN="$(printf '%s' "$SUBDOMAIN" | grep -oE 'https?://[a-z0-9-]+\.workers\.dev' | head -1 || true)"
+  [ -z "$SUBDOMAIN" ] && echo "  没识别到 workers.dev 地址，请重新粘贴。"
+done
 SUBDOMAIN="${SUBDOMAIN%/}"
 WORKER_URL="${SUBDOMAIN}/tvbox.json"
 
