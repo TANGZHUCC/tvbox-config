@@ -116,7 +116,14 @@ node scripts/build.mjs --max=50     # 最多保留 50 个源
 |---|---|---|
 | `https://raw.githubusercontent.com/<user>/<repo>/main/config/tvbox.json` | 原始 | 最稳，但国内偶尔抽风 |
 | `https://cdn.jsdelivr.net/gh/<user>/<repo>@main/config/tvbox.json` | CDN | 国内速度好，有缓存（约 12h） |
-| `https://你的域名/tvbox.json` | **推荐** | 见下方 Worker 部署，**地址永久固定** |
+| `https://你的域名/tvbox.json` | **推荐（有域名时）** | 见下方 Worker 部署，地址永久固定 |
+
+> ⚠️ **中国大陆用户必读**：`*.workers.dev` 在国内**普遍被墙/严重限速**（DNS 能解析但连接超时）。本项目的 Worker 已部署在 `tvbox-api.tangzhu.workers.dev`，但**电视和本机大概率连不上**。
+> **请直接用 jsDelivr 直链作为 TVBox 配置地址**（国内可达性最好，已验证 HTTP 200）：
+> ```
+> https://cdn.jsdelivr.net/gh/TANGZHUCC/tvbox-config@main/config/tvbox.json
+> ```
+> 若你拥有自己的域名并接入 Cloudflare，可把 Worker 挂到自定义子域（如 `tvbox.你的域名.com`），这样既能固定地址、又避开了 workers.dev 的墙——这是国内最稳的方案。
 
 部署 Cloudflare Worker（免费，地址永不变）：
 ```bash
