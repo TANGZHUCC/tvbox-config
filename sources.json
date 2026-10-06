@@ -13,6 +13,7 @@
       "type": 1,
       "api": "http://127.0.0.1:19999/api.php/provide/vod/",
       "priority": 1,
+      "skipCheck": true,
       "tags": [
         "自建",
         "自有版权"
@@ -20,27 +21,27 @@
       "enabled": true
     },
     {
-      "name": "示例源A",
+      "name": "示例源A（替换为你的自有源后再启用）",
       "type": 1,
       "api": "https://api-a.example.com/api.php/provide/vod/",
       "priority": 1,
       "tags": [
         "点播"
       ],
-      "enabled": true
+      "enabled": false
     },
     {
-      "name": "示例源B",
+      "name": "示例源B（替换为你的自有源后再启用）",
       "type": 1,
       "api": "https://api-b.example.com/api.php/provide/vod/",
       "priority": 2,
       "tags": [
         "点播"
       ],
-      "enabled": true
+      "enabled": false
     },
     {
-      "name": "示例蜘蛛源",
+      "name": "示例蜘蛛源（替换为你的自有源后再启用）",
       "type": 3,
       "api": "csp_Example",
       "ext": "https://api-c.example.com/",
@@ -48,7 +49,7 @@
       "tags": [
         "蜘蛛"
       ],
-      "enabled": true
+      "enabled": false
     }
   ],
   "lives": [
@@ -57,7 +58,7 @@
       "type": 0,
       "url": "https://YOUR-DOMAIN.com/tvbox/live.m3u",
       "playerType": 1,
-      "enabled": true
+      "enabled": false
     }
   ],
   "parses": [
@@ -71,7 +72,7 @@
         "iqiyi",
         "mgtv"
       ],
-      "enabled": true
+      "enabled": false
     }
   ]
 }

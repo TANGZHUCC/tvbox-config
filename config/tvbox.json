@@ -12,61 +12,10 @@
       "quickSearch": 1,
       "filterable": 1,
       "ext": "http://127.0.0.1:19999/api.php/provide/vod/"
-    },
-    {
-      "key": "3a46c5f07a64b07d",
-      "name": "示例源A",
-      "type": 1,
-      "api": "https://api-a.example.com/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://api-a.example.com/api.php/provide/vod/"
-    },
-    {
-      "key": "a0f22024bc9b6cb6",
-      "name": "示例源B",
-      "type": 1,
-      "api": "https://api-b.example.com/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://api-b.example.com/api.php/provide/vod/"
-    },
-    {
-      "key": "f216e14bf58e6dea",
-      "name": "示例蜘蛛源",
-      "type": 3,
-      "api": "csp_Example",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://api-c.example.com/"
     }
   ],
-  "lives": [
-    {
-      "name": "自建直播源",
-      "type": 0,
-      "url": "https://YOUR-DOMAIN.com/tvbox/live.m3u",
-      "playerType": 1
-    }
-  ],
-  "parses": [
-    {
-      "name": "自建解析",
-      "type": 1,
-      "url": "https://YOUR-DOMAIN.com/tvbox/parse?url=",
-      "ext": {
-        "flag": [
-          "qq",
-          "youku",
-          "iqiyi",
-          "mgtv"
-        ]
-      }
-    }
-  ],
+  "lives": [],
+  "parses": [],
   "flags": [
     "youku",
     "qq",

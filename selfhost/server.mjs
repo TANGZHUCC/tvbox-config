@@ -36,6 +36,7 @@ import { runImport } from './importer.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const LIB_PATH = path.join(HERE, 'library.json');
+const CONFIG_PATH = path.join(HERE, '..', 'config', 'tvbox.json');
 
 const PORT = Number(process.env.PORT || 19999);
 const HOST = process.env.HOST || '0.0.0.0';
@@ -206,6 +207,30 @@ async function handle(query) {
   });
 }
 
+/* ---------------- 直接吐 TVBox 配置（局域网零依赖方案） ----------------
+ * 电视盒直接把配置地址指向本服务：http://<Mac局域网IP>:19999/tvbox.json
+ * 此处读取项目根 config/tvbox.json，并把其中写死的 127.0.0.1/localhost
+ * 改写为电视实际访问到的 host，使自建源在局域网内可被电视直连。
+ */
+async function serveTvboxConfig(req, res) {
+  let text;
+  try {
+    text = await readFile(CONFIG_PATH, 'utf8');
+  } catch {
+    res.statusCode = 404;
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.end(JSON.stringify({ code: 0, msg: 'config/tvbox.json 尚未生成，请先运行：node scripts/build.mjs --no-check' , list: [] }));
+    return;
+  }
+  const hostHeader = req.headers.host || `127.0.0.1:${PORT}`;
+  // 把 127.0.0.1:port / localhost:port 改写成电视看到的真实地址
+  text = text.replace(/(127\.0\.0\.1|localhost)(:\d+)?/g, hostHeader);
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.end(text);
+}
+
 /* ---------------- 浏览器管理后台 ---------------- */
 
 function readBody(req, limit = 2 * 1024 * 1024) {
@@ -354,6 +379,18 @@ const server = http.createServer(async (req, res) => {
   if (u.pathname === '/healthz') {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.end(JSON.stringify({ ok: true, ts: new Date().toISOString() }));
+    return;
+  }
+
+  /* TVBox 配置接口（局域网直连，改写 127.0.0.1 → 真实 host） */
+  if (u.pathname === '/tvbox.json' || u.pathname === '/config/tvbox.json') {
+    try {
+      await serveTvboxConfig(req, res);
+    } catch (e) {
+      res.statusCode = 500;
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      res.end(JSON.stringify({ code: 0, msg: String(e.message || e), list: [] }));
+    }
     return;
   }
 
@@ -521,6 +558,7 @@ refreshLib();
 
 server.listen(PORT, HOST, () => {
   console.log(`自建内容源已启动：http://${HOST}:${PORT}/api.php/provide/vod/`);
+  console.log(`TVBox 配置地址（局域网填这个）：http://<本机局域网IP>:${PORT}/tvbox.json`);
   console.log(`健康检查：http://127.0.0.1:${PORT}/healthz`);
   console.log(`管理后台：http://127.0.0.1:${PORT}/admin`);
   console.log(`内容文件：${LIB_PATH}`);

@@ -127,7 +127,11 @@ async function main() {
 
   console.log(`[1/4] 载入 ${sites.length} 个源${NO_CHECK ? '（跳过体检）' : `，开始并发体检（并发 ${CONCURRENCY}）...`}`);
 
-  let results = sites.map(() => ({ ok: true, latency: 0, note: '未检查' }));
+  let results = sites.map((s) =>
+    s.skipCheck
+      ? { ok: true, latency: 0, note: 'skipCheck（本地源不体检，始终保留）' }
+      : { ok: true, latency: 0, note: '未检查' }
+  );
   if (!NO_CHECK) {
     results = await pool(sites, CONCURRENCY, probe);
   }

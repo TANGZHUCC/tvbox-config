@@ -125,6 +125,28 @@ node scripts/build.mjs --max=50     # 最多保留 50 个源
 > ```
 > 若你拥有自己的域名并接入 Cloudflare，可把 Worker 挂到自定义子域（如 `tvbox.你的域名.com`），这样既能固定地址、又避开了 workers.dev 的墙——这是国内最稳的方案。
 
+### 5-A. ★ 局域网直连方案（中国大陆最稳，推荐先用这个）
+
+**彻底不依赖任何外网 CDN**：把 TVBox 的配置地址直接指向你这台跑着自建服务的机器，电视与电脑在同一 WiFi 下即可，零墙、零延迟、零失效。
+
+```bash
+# 在本机（Mac）启动自建服务（媒体接口 + TVBox 配置一起提供）
+cd tvbox
+node selfhost/server.mjs
+```
+
+启动后，把下面这个地址填进 TVBox → 设置 → 配置地址（把 IP 换成你 Mac 的局域网 IP）：
+
+```
+http://<你Mac的局域网IP>:19999/tvbox.json
+```
+
+- 查 Mac 局域网 IP：`ifconfig | grep "inet "`（找 `192.168.x.x` / `10.x.x.x` 那条）
+- 服务会**自动把配置里写死的 `127.0.0.1` 改写成电视实际访问到的 IP**，所以电视盒用同一个局域网地址既能拉到配置、又能直连媒体接口，无需任何手动改 IP。
+- 想让电脑重启后也常驻：把 `node selfhost/server.mjs` 配成 LaunchAgent（或放一台常开的小主机 / NAS 上跑）。
+
+> 注意：局域网方案只适用于「电视和电脑在同一网络」的场景。要远程/跨网访问，才需要 jsDelivr / 自定义域名那条路。
+
 部署 Cloudflare Worker（免费，地址永不变）：
 ```bash
 cd worker

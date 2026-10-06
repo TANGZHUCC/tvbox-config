@@ -1,29 +1,14 @@
 {
-  "generatedAt": "2026-10-05T15:22:39.579Z",
+  "generatedAt": "2026-10-06T00:50:46.703Z",
   "checked": false,
-  "total": 4,
-  "alive": 4,
+  "total": 1,
+  "alive": 1,
   "dead": 0,
   "aliveList": [
     {
       "name": "我的自建媒体库",
       "latency": 0,
-      "note": "未检查"
-    },
-    {
-      "name": "示例源A",
-      "latency": 0,
-      "note": "未检查"
-    },
-    {
-      "name": "示例源B",
-      "latency": 0,
-      "note": "未检查"
-    },
-    {
-      "name": "示例蜘蛛源",
-      "latency": 0,
-      "note": "未检查"
+      "note": "skipCheck（本地源不体检，始终保留）"
     }
   ],
   "deadList": []
