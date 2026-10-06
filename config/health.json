@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-10-06T00:50:46.703Z",
-  "checked": false,
+  "generatedAt": "2026-10-06T00:51:40.164Z",
+  "checked": true,
   "total": 1,
-  "alive": 1,
-  "dead": 0,
-  "aliveList": [
+  "alive": 0,
+  "dead": 1,
+  "aliveList": [],
+  "deadList": [
     {
       "name": "我的自建媒体库",
-      "latency": 0,
-      "note": "skipCheck（本地源不体检，始终保留）"
+      "api": "http://127.0.0.1:19999/api.php/provide/vod/",
+      "reason": "fetch failed"
     }
-  ],
-  "deadList": []
+  ]
 }

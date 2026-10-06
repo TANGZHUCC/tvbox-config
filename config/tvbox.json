@@ -2,18 +2,7 @@
   "spider": "",
   "wallpaper": "https://YOUR-DOMAIN.com/tvbox/wallpaper.jpg",
   "logo": "https://YOUR-DOMAIN.com/tvbox/logo.png",
-  "sites": [
-    {
-      "key": "05079d7e75607860",
-      "name": "我的自建媒体库",
-      "type": 1,
-      "api": "http://127.0.0.1:19999/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "http://127.0.0.1:19999/api.php/provide/vod/"
-    }
-  ],
+  "sites": [],
   "lives": [],
   "parses": [],
   "flags": [
